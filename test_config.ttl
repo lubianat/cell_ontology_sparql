@@ -24,6 +24,17 @@
              <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
              rdfs:label "has symptom"@en .
 
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#symptom_of
+:symptom_of rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#AutocompleteProperty> ;
+             rdfs:domain :Symptom ;
+             rdfs:range :Disease ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "^<http://www.wikidata.org/prop/direct/P780>" ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "The disease that can cause a symptom."@en ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
+             rdfs:label "symptom of"@en .
+
+
 
 #################################################################
 #    Classes
