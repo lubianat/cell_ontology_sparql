@@ -320,6 +320,7 @@
         language: lang,
         maxDepth: 4,
         addDistinct: true,
+        typePredicate: "wdt:P31",
         sendQueryOnFirstClassSelected: false,
         backgroundBaseColor: '29,224,153',
         autocomplete: null,
@@ -331,7 +332,6 @@
 
           queryString = limitPostProcess(queryString, queryJson);
           queryString = orderByPostProcess(queryString, queryJson);
-          queryString = wdtP31PostProcess(queryString, queryJson);
 
           $('#sparql code').html(queryString.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
           yasqe.setValue(queryString);
@@ -347,8 +347,7 @@
           // trigger the query from YasQE
           yasqe.query();
         },
-        sparqlPrefixes: {
-        }
+        sparqlPrefixes: { "wdt": "http://www.wikidata.org/prop/direct/"}
       });
 
       // load ?query= param if present
@@ -388,14 +387,6 @@
       // queryString = queryString.replace(new RegExp('}$'), "}\nORDER BY ?label LIMIT 1000");
       // queryString = queryString.replace(new RegExp('}$'), "}\nLIMIT 1000");
       return queryString;
-    }
-
-    wdtP31P279PostProcess = function (queryString, queryJson) {
-      return queryString.replaceAll("rdf:type", "<http://www.wikidata.org/prop/direct/P31>/<http://www.wikidata.org/prop/direct/P279>*");
-    }
-
-    wdtP31PostProcess = function (queryString, queryJson) {
-      return queryString.replaceAll("rdf:type", "<http://www.wikidata.org/prop/direct/P31>");
     }
 
     prefixesPostProcess = function (queryString, queryJson) {
