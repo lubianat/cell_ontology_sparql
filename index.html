@@ -320,7 +320,7 @@
         language: lang,
         maxDepth: 4,
         addDistinct: true,
-        typePredicate: "wdt:P31",
+        typePredicate: "http://www.wikidata.org/prop/direct/P31",
         sendQueryOnFirstClassSelected: false,
         backgroundBaseColor: '29,224,153',
         autocomplete: null,
@@ -346,8 +346,7 @@
           form.sparnatural.enableLoading();
           // trigger the query from YasQE
           yasqe.query();
-        },
-        sparqlPrefixes: { "wdt": "http://www.wikidata.org/prop/direct/"}
+        }
       });
 
       // load ?query= param if present
