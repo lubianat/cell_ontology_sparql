@@ -24,31 +24,14 @@
              <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
              rdfs:label "has symptom"@en .
 
-###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#symptom_of
-:symptom_of rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#AutocompleteProperty> ;
-             rdfs:domain :Symptom ;
-             rdfs:range :Disease ;
-             <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "^<http://www.wikidata.org/prop/direct/P780>" ;
-             <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "The disease that can cause a symptom."@en ;
-             <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
-             rdfs:label "symptom of"@en .
-
-###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Text
-:Text rdf:type owl:Class ;
-      rdfs:subClassOf rdfs:Literal ;
-      <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fad fa-font-case" ;
-      <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "An attribute, a property that describes the object, like a name or a description. <br/><br/>Use this to select the name of the object. Accepts regular expressions."@en ,
-                                                                         "Un attribut qui caractérise l'objet, comme un nom ou une description. <br/><br/>Choisissez ceci pour sélectionner le nom de l'objet"@fr ;
-      rdfs:label "Text"@en ,
-                 "Texte"@fr .
 
 ###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#label
 :label rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SearchProperty> ;
        rdfs:domain [ rdf:type owl:Class ;
                      owl:unionOf ( :Disease
-                                   :Symptom)
+                                   :Symptom
+                                 )
                    ] ;
        rdfs:range :Text ;
        <http://data.sparna.fr/ontologies/sparnatural-config-core#isMultilingual> "true"^^xsd:boolean ;
@@ -57,9 +40,40 @@
                   "nom"@fr .
 
 
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#may_prevent
+:may_prevent rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#AutocompleteProperty> ;
+             rdfs:domain :Treatment ;
+             rdfs:range :Disease ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/prop/direct/P4954>"@en ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "A disease that may be prevented by this chemical compound or pharmaceutical drug."@en ;
+             <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
+             rdfs:label "may prevent"@en .
+
+
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#symptom_of
+:symptom_of rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#AutocompleteProperty> ;
+            rdfs:domain :Symptom ;
+            rdfs:range :Disease ;
+            <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "^<http://www.wikidata.org/prop/direct/P780>" ;
+            <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "The disease that can cause a symptom."@en ;
+            <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_wikidata_basic ;
+            rdfs:label "symptom of"@en .
+
+
 #################################################################
 #    Classes
 #################################################################
+
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Chemical_Compound
+:Chemical_Compound rdf:type owl:Class ;
+                   rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#defaultLabelProperty> :label ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-flask"@en ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/entity/Q11173>" ;
+                   rdfs:label "Chemical Compound"@en .
+
 
 ###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Disease
 :Disease rdf:type owl:Class ;
@@ -70,14 +84,44 @@
          rdfs:label "Disease"@en .
 
 
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Drug
+:Drug rdf:type owl:Class ;
+      rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#defaultLabelProperty> :label ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-capsules"@en ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/entity/Q28885102>" ;
+      rdfs:label "Drug"@en .
+
+
 ###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Symptom
 :Symptom rdf:type owl:Class ;
          rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
          <http://data.sparna.fr/ontologies/sparnatural-config-core#defaultLabelProperty> :label ;
-
          <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-head-side-cough" ;
          <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/entity/Q169872>" ;
          rdfs:label "Symptom"@en .
+
+
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Text
+:Text rdf:type owl:Class ;
+      rdfs:subClassOf rdfs:Literal ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fad fa-font-case" ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "An attribute, a property that describes the object, like a name or a description. <br/><br/>Use this to select the name of the object. Accepts regular expressions."@en ,
+                                                                         "Un attribut qui caractérise l'objet, comme un nom ou une description. <br/><br/>Choisissez ceci pour sélectionner le nom de l'objet"@fr ;
+      rdfs:label "Text"@en ,
+                 "Texte"@fr .
+
+
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Treatment
+:Treatment rdf:type owl:Class ;
+           owl:equivalentClass [ rdf:type owl:Class ;
+                                 owl:unionOf ( :Chemical_Compound
+                                               :Drug
+                                             )
+                               ] ;
+           rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
+           <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-capsules"@en ;
+           rdfs:label "Treatment"@en .
 
 
 #################################################################
