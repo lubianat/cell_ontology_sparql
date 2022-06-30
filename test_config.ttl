@@ -62,6 +62,18 @@
             rdfs:label "symptom of"@en .
 
 
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#time_of_discovery
+:time_of_discovery rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#TimeProperty-Date> ;
+                   rdfs:domain :Disease ;
+                   rdfs:range :Date ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#enableNegation> "true"@en ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#enableOptional> "true"^^xsd:boolean ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/prop/direct/P575>" ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "the date of discovery of a disease"@en ;
+                   rdfs:label "date of discovery" .
+
+
 #################################################################
 #    Classes
 #################################################################
@@ -73,6 +85,14 @@
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-flask"@en ;
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.wikidata.org/entity/Q11173>" ;
                    rdfs:label "Chemical Compound"@en .
+
+
+###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Date
+:Date rdf:type owl:Class ;
+      rdfs:subClassOf rdfs:Literal ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-calendar-alt" ;
+      <http://data.sparna.fr/ontologies/sparnatural-config-core#tooltip> "a date or a year"@en ;
+      rdfs:label "Date"@en .
 
 
 ###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Disease
