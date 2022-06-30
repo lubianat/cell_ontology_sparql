@@ -82,8 +82,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link" href="https://github.com/lubianat/sparnatural_wikidata_prototype"><i style="font-size:25px;"
-                class="fab fa-github"></i>&nbsp; Github</a></li>
+          <li><a class="nav-link" href="https://github.com/lubianat/sparnatural_wikidata_prototype"><i
+                style="font-size:25px;" class="fab fa-github"></i>&nbsp; Github</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -310,7 +310,8 @@
         'export.modal.close': 'Close',
         'example.placeholder': 'Load example query...',
         'example.1.title': 'Diseases that have abdominal cramps as symptoms.',
-        'example.2.title': 'Treatments and the diseases they may prevent (currently broken).'}
+        'example.2.title': 'Treatments and the diseases they may prevent (currently broken).'
+      }
     });
     $('body').i18n();
 
@@ -331,8 +332,6 @@
         defaultEndpoint: $('#endpoint').text(),
         onQueryUpdated: function (queryString, queryJson) {
           queryString = semanticPostProcess(queryString, queryJson);
-          queryString = rdfsLabelPostProcess(queryString, queryJson);
-
           queryString = limitPostProcess(queryString, queryJson);
           queryString = orderByPostProcess(queryString, queryJson);
 
@@ -375,8 +374,8 @@
 
     orderByPostProcess = function (queryString, queryJson) {
       let var_now = "";
-      let projections = ""; 
-      for (let var_i=0; var_i<queryJson.variables.length; var_i++){
+      let projections = "";
+      for (let var_i = 0; var_i < queryJson.variables.length; var_i++) {
         var_now = queryJson.variables[var_i];
         projections = projections + ` ${var_now} ${var_now}_label`
       }
@@ -396,15 +395,6 @@
         queryString = queryString.replace("SELECT ", "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nSELECT ");
       }
       return queryString;
-    }
-
-    rdfsLabelPostProcess = function (queryString, queryJson) {
-      let var_now = "";
-      for (let var_i=0; var_i<queryJson.variables.length; var_i++){
-        var_now = queryJson.variables[var_i];
-        queryString = queryString.replace(new RegExp('}$'), `  ${var_now} rdfs:label ${var_now}_label FILTER(lang(${var_now}_label) = 'en') \n}`);
-      }
-        return queryString;
     }
 
     semanticPostProcess = function (queryString, queryJson) {
