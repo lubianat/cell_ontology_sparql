@@ -333,7 +333,6 @@
         onQueryUpdated: function (queryString, queryJson) {
           queryString = semanticPostProcess(queryString, queryJson);
           queryString = limitPostProcess(queryString, queryJson);
-          queryString = orderByPostProcess(queryString, queryJson);
 
           $('#sparql code').html(queryString.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
           yasqe.setValue(queryString);
@@ -372,16 +371,6 @@
       return queryString;
     }
 
-    orderByPostProcess = function (queryString, queryJson) {
-      let var_now = "";
-      let projections = "";
-      for (let var_i = 0; var_i < queryJson.variables.length; var_i++) {
-        var_now = queryJson.variables[var_i];
-        projections = projections + ` ${var_now} ${var_now}_label`
-      }
-      queryString = queryString.replace(new RegExp('SELECT DISTINCT .*? WHERE'), `SELECT DISTINCT ${projections}`);
-      return queryString;
-    }
 
     limitPostProcess = function (queryString, queryJson) {
       queryString = queryString.replace(new RegExp('$'), "\nLIMIT 1000");
