@@ -21,7 +21,11 @@
 ###  http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#label
 :label rdf:type owl:ObjectProperty ;
        rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SearchProperty> ;
-       rdfs:domain :Cell_Type ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Cell_Type
+                                   :Organ
+                                 )
+                   ] ;
        rdfs:range :Text ;
        <http://data.sparna.fr/ontologies/sparnatural-config-core#isMultilingual> "false"^^xsd:boolean ;
        <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://www.w3.org/2000/01/rdf-schema#label>" ;
@@ -35,8 +39,21 @@
        <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://purl.obolibrary.org/obo/BFO_0000050>" ;
        <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_ubergraph_basic ;
 
-       rdfs:label "name"@en .
+       rdfs:label "part of"@en .
 
+:develops_from rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf <http://data.sparna.fr/ontologies/sparnatural-config-core#AutocompleteProperty> ;
+       rdfs:domain :Cell_Type ;
+       rdfs:range [ rdf:type owl:Class ;
+                     owl:unionOf ( :Cell_Type
+                                   :Organ
+                                 )
+                   ] ;
+       <http://data.sparna.fr/ontologies/sparnatural-config-core#isMultilingual> "false"^^xsd:boolean ;
+       <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> "<http://purl.obolibrary.org/obo/RO_0002202>" ;
+       <http://data.sparna.fr/ontologies/sparnatural-config-datasources#datasource> :search_ubergraph_basic ;
+
+       rdfs:label "develops_from"@en .
 #################################################################
 #    Classes
 #################################################################
@@ -44,14 +61,14 @@
 :Cell_Type rdf:type owl:Class ;
                    rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#defaultLabelProperty> :label ;
-                   <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-flask"@en ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-bullseye"@en ;
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> <cell:> ;
                    rdfs:label "Cell Type"@en .
 
 :Organ rdf:type owl:Class ;
                    rdfs:subClassOf <http://data.sparna.fr/ontologies/sparnatural-config-core#SparnaturalClass> ;
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#defaultLabelProperty> :label ;
-                   <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-flask"@en ;
+                   <http://data.sparna.fr/ontologies/sparnatural-config-core#faIcon> "fas fa-lungs"@en ;
                    <http://data.sparna.fr/ontologies/sparnatural-config-core#sparqlString> <organ:> ;
                    rdfs:label "Organ"@en .
 
@@ -75,7 +92,7 @@ PREFIX bone_element: <http://purl.obolibrary.org/obo/UBERON_0001474>
 PREFIX skeletal_system: <http://purl.obolibrary.org/obo/UBERON_0001434>
 SELECT DISTINCT ?uri ?label
 WHERE {
-    ?domain rdfs:subClassOf*  $domain .
+    ?domain rdfs:subClassOf  $domain .
     ?domain $property ?uri .
     ?uri rdfs:label ?label .
     FILTER(isIRI(?uri))

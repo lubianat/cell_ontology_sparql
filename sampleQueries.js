@@ -27,7 +27,7 @@ var sampleQueries = {
     "distinct": true,
     "variables": [
       "?this",
-      "?Disease_1"
+      "?Organ_1"
     ],
     "defaultLang": "en",
     "order": null,
@@ -35,11 +35,16 @@ var sampleQueries = {
       {
         "line": {
           "s": "?this",
-          "p": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#may_prevent",
-          "o": "?Disease_1",
-          "sType": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Treatment",
-          "oType": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Disease",
-          "values": []
+          "p": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#part_of",
+          "o": "?Organ_1",
+          "sType": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Cell_Type",
+          "oType": "http://www.semanticweb.org/lubianat/ontologies/2022/4/sparnanatural_wisecube#Organ",
+          "values": [
+            {
+              "label": "camera-type eye",
+              "uri": "http://purl.obolibrary.org/obo/UBERON_0000019"
+            }
+          ]
         },
         "children": []
       }

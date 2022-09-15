@@ -310,7 +310,7 @@
         'export.modal.close': 'Close',
         'example.placeholder': 'Load example query...',
         'example.1.title': 'All cell types in CL.',
-        'example.2.title': ''
+        'example.2.title': 'Cells in camera-type eyes.'
       }
     });
     $('body').i18n();
@@ -324,7 +324,7 @@
         language: lang,
         maxDepth: 4,
         addDistinct: true,
-        typePredicate: "rdfs:subClassOf*",
+        typePredicate: "rdfs:subClassOf",
         sendQueryOnFirstClassSelected: false,
         backgroundBaseColor: '29,224,153',
         autocomplete: null,
@@ -375,7 +375,7 @@
 
 
     subClassOfPost_Process = function (queryString, queryJson) {
-      queryString = queryString.replaceAll("<rdfs:subClassOf*>", "rdfs:subClassOf*");
+      queryString = queryString.replaceAll("<rdfs:subClassOf>", "rdfs:subClassOf");
       // queryString = queryString.replace(new RegExp('}$'), "}\nORDER BY ?label LIMIT 1000");
       // queryString = queryString.replace(new RegExp('}$'), "}\nLIMIT 1000");
       return queryString;
