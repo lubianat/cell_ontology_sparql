@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Sparnatural on Wikidata</title>
+  <title>Sparnatural for the Cell Ontology</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -82,8 +82,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link" href="https://github.com/lubianat/sparnatural_wikidata_prototype"><i
-                style="font-size:25px;" class="fab fa-github"></i>&nbsp; Github</a></li>
+          <li><a class="nav-link" href="https://github.com/lubianat/cell_ontology_sparql"><i style="font-size:25px;"
+                class="fab fa-github"></i>&nbsp; Github</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -112,7 +112,7 @@
           <div style="text-align:right;">
             <span style="font-size:90%; font-style: italic;">
               <span data-i18n="endpoint.querying"></span> <a id="endpoint"
-                href="https://query.wikidata.org/sparql">https://query.wikidata.org/sparql</a>
+                href="https://ubergraph.apps.renci.org/sparql">https://ubergraph.apps.renci.org/sparql</a>
             </span>
           </div>
         </div>
@@ -296,7 +296,7 @@
     $.i18n({ locale: lang });
     $.i18n().load({
       'en': {
-        'page.title': 'Wikidata Biomedical Sparnatural ',
+        'page.title': 'Sparnatural for the Cell Ontology',
         'menu.home': 'Sparnatural',
         'menu.lang': 'Lang.',
         'menu.github': 'Github',
@@ -309,8 +309,8 @@
         'export.modal.title': 'Query as JSON',
         'export.modal.close': 'Close',
         'example.placeholder': 'Load example query...',
-        'example.1.title': 'Diseases that have abdominal cramps as symptoms.',
-        'example.2.title': 'Treatments and the diseases they may prevent (currently broken).'
+        'example.1.title': 'All cell types in CL.',
+        'example.2.title': ''
       }
     });
     $('body').i18n();
@@ -324,7 +324,7 @@
         language: lang,
         maxDepth: 4,
         addDistinct: true,
-        typePredicate: "http://www.wikidata.org/prop/direct/P31",
+        typePredicate: "rdfs:subClassOf*",
         sendQueryOnFirstClassSelected: false,
         backgroundBaseColor: '29,224,153',
         autocomplete: null,
@@ -333,6 +333,8 @@
         onQueryUpdated: function (queryString, queryJson) {
           queryString = semanticPostProcess(queryString, queryJson);
           queryString = limitPostProcess(queryString, queryJson);
+          queryString = subClassOfPost_Process(queryString, queryJson);
+          queryString = prefixesPostProcess(queryString, queryJson);
 
           $('#sparql code').html(queryString.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
           yasqe.setValue(queryString);
@@ -372,6 +374,13 @@
     }
 
 
+    subClassOfPost_Process = function (queryString, queryJson) {
+      queryString = queryString.replaceAll("<rdfs:subClassOf*>", "rdfs:subClassOf*");
+      // queryString = queryString.replace(new RegExp('}$'), "}\nORDER BY ?label LIMIT 1000");
+      // queryString = queryString.replace(new RegExp('}$'), "}\nLIMIT 1000");
+      return queryString;
+    }
+
     limitPostProcess = function (queryString, queryJson) {
       queryString = queryString.replace(new RegExp('$'), "\nLIMIT 1000");
       // queryString = queryString.replace(new RegExp('}$'), "}\nORDER BY ?label LIMIT 1000");
@@ -381,7 +390,8 @@
 
     prefixesPostProcess = function (queryString, queryJson) {
       if (queryString.indexOf("rdf-schema#") == -1) {
-        queryString = queryString.replace("SELECT ", "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nSELECT ");
+        queryString = queryString.replace("SELECT ",
+          "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>  \n PREFIX cell: <http://purl.obolibrary.org/obo/CL_0000000>  \n PREFIX organ: <http://purl.obolibrary.org/obo/UBERON_0000062>  \n PREFIX abdomen: <http://purl.obolibrary.org/obo/UBERON_0000916>  \n  PREFIX bone_element: <http://purl.obolibrary.org/obo/UBERON_0001474>  \n PREFIX skeletal_system: <http://purl.obolibrary.org/obo/UBERON_0001434> \n SELECT ");
       }
       return queryString;
     }
